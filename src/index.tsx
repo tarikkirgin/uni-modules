@@ -19,6 +19,51 @@ const DEFAULT_MODULES: Module[] = [
     semester: "First",
     year: 1,
     url: "https://minerva.leeds.ac.uk/ultra/courses/_550939_1/outline"
+  },
+  {
+    id: nanoid(),
+    course: Courses.CS,
+    title: "Computer Architecture",
+    module_code: "COMP1211",
+    semester: "First",
+    year: 1,
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550937_1/outline"
+  },
+  {
+    id: nanoid(),
+    course: Courses.CS,
+    title: "Procedural Programming",
+    module_code: "COMP1711",
+    semester: "First",
+    year: 1,
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550941_1/outline"
+  },
+  {
+    id: nanoid(),
+    course: Courses.CS,
+    title: "Professional Computing",
+    module_code: "COMP1911",
+    semester: "First",
+    year: 1,
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550943_1/outline"
+  },
+  {
+    id: nanoid(),
+    course: Courses.PSYC,
+    title: "Introduction to Psychology",
+    module_code: "PSYC1601",
+    semester: "First",
+    year: 1,
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_548972_1/outline"
+  },
+  {
+    id: nanoid(),
+    course: Courses.CS,
+    title: "Introduction to Web Technologies",
+    module_code: "COMP1021",
+    semester: "Second",
+    year: 1,
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550935_1/outline"
   }
 ];
 
