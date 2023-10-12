@@ -138,7 +138,8 @@ export default function Command() {
     filterModules(
       modules.filter(
         (module) =>
-          (module.title.includes(searchText) || module.module_code.includes(searchText)) &&
+          (module.title.toLowerCase().includes(searchText.toLowerCase()) ||
+            module.module_code.toLowerCase().includes(searchText.toLowerCase())) &&
           (dropdownValue === "all" ? true : module.course === dropdownValue)
       )
     );
