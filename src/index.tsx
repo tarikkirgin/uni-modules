@@ -170,7 +170,7 @@ export default function Command() {
             <ActionPanel>
               <ActionPanel.Section>
                 <Action.OpenInBrowser url={module.url} onOpen={() => visitItem(module)} />
-                <Action.CopyToClipboard content={module.title} onCopy={() => visitItem(module)} />
+                <Action.CopyToClipboard content={module.url} onCopy={() => visitItem(module)} />
               </ActionPanel.Section>
               <ActionPanel.Section>
                 <CreateModuleAction onCreate={handleCreate} />
