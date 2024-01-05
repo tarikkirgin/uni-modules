@@ -5,7 +5,7 @@ import AppendModuleAction from "./AppendDefaultsAction";
 
 function EmptyView(props: {
   modules: Module[];
-  onCreate: (title: string, module_code: string, course: Courses, semester: string, year: number, url: string) => void;
+  onCreate: (title: string, module_code: string, course: Courses, semester: number, year: number, url: string) => void;
   onRestore: () => void;
 }) {
   if (props.modules.length > 0) {

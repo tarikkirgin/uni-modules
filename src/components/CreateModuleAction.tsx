@@ -8,7 +8,7 @@ function CreateModuleAction(props: {
   defaultCourse?: Courses;
   defaultSemester?: number;
   defaultYear?: number;
-  onCreate: (title: string, module_code: string, course: Courses, semester: string, year: number, url: string) => void;
+  onCreate: (title: string, module_code: string, course: Courses, semester: number, year: number, url: string) => void;
 }) {
   return (
     <Action.Push

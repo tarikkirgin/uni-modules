@@ -3,7 +3,7 @@ interface Module {
   title: string;
   module_code: string;
   course: string;
-  semester: string;
+  semester: number;
   year: number;
   url: string;
 }

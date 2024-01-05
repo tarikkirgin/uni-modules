@@ -6,15 +6,15 @@ function CreateModuleForm(props: {
   defaultTitle?: string;
   defaultModuleCode?: string;
   defaultCourse?: Courses;
-  defaultSemester?: string;
+  defaultSemester?: number;
   defaultYear?: number;
-  onCreate: (title: string, module_code: string, course: Courses, semester: string, year: number, url: string) => void;
+  onCreate: (title: string, module_code: string, course: Courses, semester: number, year: number, url: string) => void;
 }) {
   const { onCreate, defaultCourse = Courses.CS, defaultSemester = "First", defaultYear = 1 } = props;
   const { pop } = useNavigation();
 
   const handleSubmit = useCallback(
-    (values: { title: string; module_code: string; course: Courses; semester: string; year: number; url: string }) => {
+    (values: { title: string; module_code: string; course: Courses; semester: number; year: number; url: string }) => {
       onCreate(values.title, values.module_code, values.course, values.semester, values.year, values.url);
       pop();
     },
@@ -35,10 +35,9 @@ function CreateModuleForm(props: {
         <Form.Dropdown.Item value={Courses.PSYC} title={Courses.PSYC} />
       </Form.Dropdown>
       <Form.TextField id="module_code" title="Module Code" placeholder="COMP1211" />
-      <Form.Dropdown id="semester" defaultValue={defaultSemester} title="Semester">
-        <Form.Dropdown.Item value="First" title="First" />
-        <Form.Dropdown.Item value="Second" title="Second" />
-        <Form.Dropdown.Item value="Both" title="Both" />
+      <Form.Dropdown id="semester" defaultValue={defaultSemester.toString()} title="Semester">
+        <Form.Dropdown.Item value="1" title="First" />
+        <Form.Dropdown.Item value="2" title="Second" />
       </Form.Dropdown>
       <Form.Dropdown id="year" defaultValue={defaultYear.toString()} title="Year">
         <Form.Dropdown.Item value="1" title="First" />

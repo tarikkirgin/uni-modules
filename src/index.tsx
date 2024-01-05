@@ -16,7 +16,7 @@ const DEFAULT_MODULES: Module[] = [
     course: Courses.CS,
     title: "Fundamental Mathematical Concepts",
     module_code: "COMP1421",
-    semester: "First",
+    semester: 1,
     year: 1,
     url: "https://minerva.leeds.ac.uk/ultra/courses/_550939_1/outline"
   },
@@ -25,7 +25,7 @@ const DEFAULT_MODULES: Module[] = [
     course: Courses.CS,
     title: "Computer Architecture",
     module_code: "COMP1211",
-    semester: "First",
+    semester: 1,
     year: 1,
     url: "https://minerva.leeds.ac.uk/ultra/courses/_550937_1/outline"
   },
@@ -34,7 +34,7 @@ const DEFAULT_MODULES: Module[] = [
     course: Courses.CS,
     title: "Procedural Programming",
     module_code: "COMP1711",
-    semester: "First",
+    semester: 1,
     year: 1,
     url: "https://minerva.leeds.ac.uk/ultra/courses/_550941_1/outline"
   },
@@ -43,7 +43,7 @@ const DEFAULT_MODULES: Module[] = [
     course: Courses.CS,
     title: "Professional Computing",
     module_code: "COMP1911",
-    semester: "First",
+    semester: 1,
     year: 1,
     url: "https://minerva.leeds.ac.uk/ultra/courses/_550943_1/outline"
   },
@@ -52,7 +52,7 @@ const DEFAULT_MODULES: Module[] = [
     course: Courses.PSYC,
     title: "Introduction to Psychology",
     module_code: "PSYC1601",
-    semester: "First",
+    semester: 1,
     year: 1,
     url: "https://minerva.leeds.ac.uk/ultra/courses/_548972_1/outline"
   },
@@ -61,7 +61,7 @@ const DEFAULT_MODULES: Module[] = [
     course: Courses.CS,
     title: "Introduction to Web Technologies",
     module_code: "COMP1021",
-    semester: "Second",
+    semester: 2,
     year: 1,
     url: "https://minerva.leeds.ac.uk/ultra/courses/_550935_1/outline"
   }
@@ -107,7 +107,7 @@ export default function Command() {
   }, [state.modules]);
 
   const handleCreate = useCallback(
-    (title: string, module_code: string, course: Courses, semester: string, year: number, url: string) => {
+    (title: string, module_code: string, course: Courses, semester: number, year: number, url: string) => {
       const newModules = [...state.modules, { id: nanoid(), title, module_code, course, semester, year, url }];
       setState((previous) => ({ ...previous, modules: newModules }));
     },
