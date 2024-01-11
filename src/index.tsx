@@ -10,6 +10,8 @@ type State = {
   isLoading: boolean;
 };
 
+const DEFAULT_SEMESTER = "11";
+
 const DEFAULT_MODULES: Module[] = [
   {
     id: nanoid(),
@@ -94,7 +96,11 @@ export default function Command() {
 
       try {
         const modules: Module[] = JSON.parse(storedModules);
-        setState((previous) => ({ ...previous, modules: modules, isLoading: false }));
+        setState((previous) => ({
+          ...previous,
+          modules: modules,
+          isLoading: false
+        }));
       } catch (e) {
         // can't decode modules
         setState((previous) => ({ ...previous, modules: DEFAULT_MODULES, isLoading: false }));
@@ -140,7 +146,7 @@ export default function Command() {
         (module) =>
           (module.title.toLowerCase().includes(searchText.toLowerCase()) ||
             module.module_code.toLowerCase().includes(searchText.toLowerCase())) &&
-          (dropdownValue === "all" ? true : module.course === dropdownValue)
+          `${module.year}${module.semester}` === dropdownValue
       )
     );
   }, [searchText, dropdownValue]);
@@ -152,10 +158,24 @@ export default function Command() {
       isLoading={state.isLoading}
       searchBarPlaceholder="Search modules..."
       searchBarAccessory={
-        <List.Dropdown defaultValue="all" tooltip="Filter by course" onChange={setDropdownValue}>
-          <List.Dropdown.Item title="All Courses" value="all" icon={Icon.List} />
-          <List.Dropdown.Item title={Courses.CS} value={Courses.CS} icon={getIcon(Courses.CS)} keywords={["cs"]} />
-          <List.Dropdown.Item title={Courses.PSYC} value={Courses.PSYC} icon={getIcon(Courses.PSYC)} />
+        <List.Dropdown
+          defaultValue={DEFAULT_SEMESTER}
+          tooltip="Filter by time period"
+          onChange={setDropdownValue}
+          storeValue={true}
+        >
+          <List.Dropdown.Section title="Year 1">
+            <List.Dropdown.Item title={"Year 1 - Semester 1"} value="11" icon={Icon.Calendar} />
+            <List.Dropdown.Item title={"Year 1 - Semester 2"} value="12" icon={Icon.Calendar} />
+          </List.Dropdown.Section>
+          <List.Dropdown.Section title="Year 2">
+            <List.Dropdown.Item title={"Year 2 - Semester 1"} value="21" icon={Icon.Calendar} />
+            <List.Dropdown.Item title={"Year 2 - Semester 2"} value="22" icon={Icon.Calendar} />
+          </List.Dropdown.Section>
+          <List.Dropdown.Section title="Year 3">
+            <List.Dropdown.Item title={"Year 3 - Semester 1"} value="31" icon={Icon.Calendar} />
+            <List.Dropdown.Item title={"Year 3 - Semester 2"} value="32" icon={Icon.Calendar} />
+          </List.Dropdown.Section>
         </List.Dropdown>
       }
     >
