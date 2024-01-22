@@ -20,7 +20,7 @@ const DEFAULT_MODULES: Module[] = [
     module_code: "COMP1421",
     semester: 1,
     year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550939_1/outline"
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550939_1/outline",
   },
   {
     id: nanoid(),
@@ -29,7 +29,7 @@ const DEFAULT_MODULES: Module[] = [
     module_code: "COMP1211",
     semester: 1,
     year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550937_1/outline"
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550937_1/outline",
   },
   {
     id: nanoid(),
@@ -38,7 +38,7 @@ const DEFAULT_MODULES: Module[] = [
     module_code: "COMP1711",
     semester: 1,
     year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550941_1/outline"
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550941_1/outline",
   },
   {
     id: nanoid(),
@@ -47,7 +47,7 @@ const DEFAULT_MODULES: Module[] = [
     module_code: "COMP1911",
     semester: 1,
     year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550943_1/outline"
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550943_1/outline",
   },
   {
     id: nanoid(),
@@ -56,7 +56,7 @@ const DEFAULT_MODULES: Module[] = [
     module_code: "PSYC1601",
     semester: 1,
     year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_548972_1/outline"
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_548972_1/outline",
   },
   {
     id: nanoid(),
@@ -65,8 +65,8 @@ const DEFAULT_MODULES: Module[] = [
     module_code: "COMP1021",
     semester: 2,
     year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550935_1/outline"
-  }
+    url: "https://minerva.leeds.ac.uk/ultra/courses/_550935_1/outline",
+  },
 ];
 
 function getIcon(course: string) {
@@ -82,7 +82,7 @@ function getIcon(course: string) {
 export default function Command() {
   const [state, setState] = useState<State>({
     modules: DEFAULT_MODULES,
-    isLoading: true
+    isLoading: true,
   });
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export default function Command() {
         setState((previous) => ({
           ...previous,
           modules: modules,
-          isLoading: false
+          isLoading: false,
         }));
       } catch (e) {
         // can't decode modules
