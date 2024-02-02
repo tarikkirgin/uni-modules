@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { Action, ActionPanel, Icon, List, LocalStorage, Color } from "@raycast/api";
-import { Module, Courses } from "./types";
-import { CreateModuleAction, DeleteModuleAction, AppendDefaultsAction, EmptyView } from "./components";
+import { Module } from "./types";
+import { EmptyView } from "./components";
 import { useFrecencySorting } from "@raycast/utils";
+import data from "./modules.js";
 
 type State = {
   modules: Module[];
@@ -12,67 +13,10 @@ type State = {
 
 const DEFAULT_SEMESTER = "11";
 
-const DEFAULT_MODULES: Module[] = [
-  {
-    id: nanoid(),
-    course: Courses.CS,
-    title: "Fundamental Mathematical Concepts",
-    module_code: "COMP1421",
-    semester: 1,
-    year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550939_1/outline",
-  },
-  {
-    id: nanoid(),
-    course: Courses.CS,
-    title: "Computer Architecture",
-    module_code: "COMP1211",
-    semester: 1,
-    year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550937_1/outline",
-  },
-  {
-    id: nanoid(),
-    course: Courses.CS,
-    title: "Procedural Programming",
-    module_code: "COMP1711",
-    semester: 1,
-    year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550941_1/outline",
-  },
-  {
-    id: nanoid(),
-    course: Courses.CS,
-    title: "Professional Computing",
-    module_code: "COMP1911",
-    semester: 1,
-    year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550943_1/outline",
-  },
-  {
-    id: nanoid(),
-    course: Courses.PSYC,
-    title: "Introduction to Psychology",
-    module_code: "PSYC1601",
-    semester: 1,
-    year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_548972_1/outline",
-  },
-  {
-    id: nanoid(),
-    course: Courses.CS,
-    title: "Introduction to Web Technologies",
-    module_code: "COMP1021",
-    semester: 2,
-    year: 1,
-    url: "https://minerva.leeds.ac.uk/ultra/courses/_550935_1/outline",
-  },
-];
-
 function getIcon(course: string) {
-  if (course == "Computer Science") {
+  if (course == "COMP") {
     return { source: Icon.Monitor, tintColor: Color.Blue };
-  } else if (course == "Psychology") {
+  } else if (course == "PSYC") {
     return { source: Icon.TwoPeople, tintColor: Color.Magenta };
   } else {
     return Icon.Book;
@@ -81,21 +25,24 @@ function getIcon(course: string) {
 
 export default function Command() {
   const [state, setState] = useState<State>({
-    modules: DEFAULT_MODULES,
+    modules: [],
     isLoading: true,
   });
 
   useEffect(() => {
     (async () => {
       const storedModules = await LocalStorage.getItem<string>("modules");
+      console.log("🚀 ~ storedModules:", storedModules);
 
       if (!storedModules) {
+        console.log("bruh");
         setState((previous) => ({ ...previous, isLoading: false }));
         return;
       }
 
       try {
-        const modules: Module[] = JSON.parse(storedModules);
+        const modules: Module[] = data;
+        console.log(data);
         setState((previous) => ({
           ...previous,
           modules: modules,
@@ -103,7 +50,7 @@ export default function Command() {
         }));
       } catch (e) {
         // can't decode modules
-        setState((previous) => ({ ...previous, modules: DEFAULT_MODULES, isLoading: false }));
+        setState((previous) => ({ ...previous, isLoading: false }));
       }
     })();
   }, []);
@@ -111,28 +58,6 @@ export default function Command() {
   useEffect(() => {
     LocalStorage.setItem("modules", JSON.stringify(state.modules));
   }, [state.modules]);
-
-  const handleCreate = useCallback(
-    (title: string, module_code: string, course: Courses, semester: number, year: number, url: string) => {
-      const newModules = [...state.modules, { id: nanoid(), title, module_code, course, semester, year, url }];
-      setState((previous) => ({ ...previous, modules: newModules }));
-    },
-    [state.modules, setState]
-  );
-
-  const handleDelete = useCallback(
-    (index: number) => {
-      const newModules = [...state.modules];
-      newModules.splice(index, 1);
-      setState((previous) => ({ ...previous, modules: newModules }));
-    },
-    [state.modules, setState]
-  );
-
-  const handleAppend = useCallback(() => {
-    const newModules = [...state.modules, ...DEFAULT_MODULES];
-    setState((previous) => ({ ...previous, modules: newModules }));
-  }, [state.modules, setState]);
 
   const { data: modules, visitItem } = useFrecencySorting(state.modules);
 
@@ -179,7 +104,7 @@ export default function Command() {
         </List.Dropdown>
       }
     >
-      <EmptyView modules={state.modules} onCreate={handleCreate} onRestore={handleAppend} />
+      <EmptyView modules={state.modules} />
       {filteredModules.map((module, index) => (
         <List.Item
           key={module.id}
@@ -191,11 +116,6 @@ export default function Command() {
               <ActionPanel.Section>
                 <Action.OpenInBrowser url={module.url} onOpen={() => visitItem(module)} />
                 <Action.CopyToClipboard content={module.url} onCopy={() => visitItem(module)} />
-              </ActionPanel.Section>
-              <ActionPanel.Section>
-                <CreateModuleAction onCreate={handleCreate} />
-                <DeleteModuleAction onDelete={() => handleDelete(index)} />
-                <AppendDefaultsAction onRestore={handleAppend} />
               </ActionPanel.Section>
             </ActionPanel>
           }

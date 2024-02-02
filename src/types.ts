@@ -8,9 +8,4 @@ interface Module {
   url: string;
 }
 
-export const enum Courses {
-  CS = "Computer Science",
-  PSYC = "Psychology",
-}
-
 export type { Module };
