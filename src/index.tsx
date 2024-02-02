@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { nanoid } from "nanoid";
+import { useEffect, useState } from "react";
 import { Action, ActionPanel, Icon, List, LocalStorage, Color } from "@raycast/api";
 import { Module } from "./types";
 import { EmptyView } from "./components";
@@ -103,7 +102,7 @@ export default function Command() {
       }
     >
       <EmptyView modules={state.modules} />
-      {filteredModules.map((module, index) => (
+      {filteredModules.map((module) => (
         <List.Item
           key={module.id}
           title={module.title}
