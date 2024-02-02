@@ -1,4 +1,6 @@
-export default [
+import { Module } from "./types";
+
+const config: Module[] = [
   {
     id: "_550937_1",
     course: "COMP",
@@ -99,3 +101,4 @@ export default [
     url: "https://minerva.leeds.ac.uk/ultra/courses/_550944_1/outline",
   },
 ];
+export default config;
