@@ -31,18 +31,16 @@ export default function Command() {
 
   useEffect(() => {
     (async () => {
-      const storedModules = await LocalStorage.getItem<string>("modules");
-      console.log("🚀 ~ storedModules:", storedModules);
+      const storedModulesRaw = await LocalStorage.getItem<string>("modules");
 
-      if (!storedModules) {
-        console.log("bruh");
-        setState((previous) => ({ ...previous, isLoading: false }));
+      if (storedModulesRaw) {
+        const storedModules: Module[] = JSON.parse(storedModulesRaw);
+        setState((previous) => ({ ...previous, modules: storedModules, isLoading: false }));
         return;
       }
 
       try {
         const modules: Module[] = data;
-        console.log(data);
         setState((previous) => ({
           ...previous,
           modules: modules,
