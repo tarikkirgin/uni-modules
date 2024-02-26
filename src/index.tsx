@@ -3,6 +3,8 @@ import { Action, ActionPanel, Icon, List, LocalStorage, Color } from "@raycast/a
 import { Module } from "./types";
 import { EmptyView } from "./components";
 import { useFrecencySorting } from "@raycast/utils";
+import { homedir } from "os";
+import { join } from "path";
 import data from "./modules.js";
 
 type State = {
@@ -113,6 +115,12 @@ export default function Command() {
               <ActionPanel.Section>
                 <Action.OpenInBrowser url={module.url} onOpen={() => visitItem(module)} />
                 <Action.CopyToClipboard content={module.url} onCopy={() => visitItem(module)} />
+                <Action.CopyToClipboard
+                  title="Copy Name to Clipboard"
+                  content={`${module.module_code} - ${module.title}`}
+                  shortcut={{ modifiers: ["cmd"], key: "n" }}
+                  icon={Icon.Text}
+                />
               </ActionPanel.Section>
             </ActionPanel>
           }
