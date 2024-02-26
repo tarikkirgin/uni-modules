@@ -121,6 +121,19 @@ export default function Command() {
                   shortcut={{ modifiers: ["cmd"], key: "n" }}
                   icon={Icon.Text}
                 />
+                <Action.Open
+                  title="Open in Finder"
+                  target={join(
+                    homedir(),
+                    "Documents",
+                    "University",
+                    "CS",
+                    `Year ${module.year}`,
+                    `Semester ${module.semester}`,
+                    `${module.title} - ${module.module_code}`
+                  )}
+                  shortcut={{ modifiers: ["cmd"], key: "o" }}
+                />
               </ActionPanel.Section>
             </ActionPanel>
           }
