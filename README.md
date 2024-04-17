@@ -1,6 +1,6 @@
 # uni-modules
 
-Raycast extension which provides list of modules for easy navigation.
+[Raycast](https://www.raycast.com/) extension which provides list of modules for easy navigation.
 
 ## Usage (Blackboard)
 
