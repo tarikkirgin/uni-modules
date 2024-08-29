@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Action, ActionPanel, Icon, List, LocalStorage, Color } from "@raycast/api";
+import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { Module } from "./types";
 import { EmptyView } from "./components";
 import { useFrecencySorting } from "@raycast/utils";
-import { homedir } from "os";
-import { join } from "path";
-import data from "./modules.js";
+import { getModuleFolderPath, createModuleFolder, getIcon } from "./util";
+import data from "../modules.json";
 
 type State = {
   modules: Module[];
@@ -14,16 +13,6 @@ type State = {
 
 const DEFAULT_SEMESTER = "11";
 
-function getIcon(course: string) {
-  if (course == "COMP") {
-    return { source: Icon.Monitor, tintColor: Color.Blue };
-  } else if (course == "PSYC") {
-    return { source: Icon.TwoPeople, tintColor: Color.Magenta };
-  } else {
-    return Icon.Book;
-  }
-}
-
 export default function Command() {
   const [state, setState] = useState<State>({
     modules: [],
@@ -31,32 +20,12 @@ export default function Command() {
   });
 
   useEffect(() => {
-    (async () => {
-      const storedModulesRaw = await LocalStorage.getItem<string>("modules");
-
-      if (storedModulesRaw) {
-        const storedModules: Module[] = JSON.parse(storedModulesRaw);
-        setState((previous) => ({ ...previous, modules: storedModules, isLoading: false }));
-        return;
-      }
-
-      try {
-        const modules: Module[] = data;
-        setState((previous) => ({
-          ...previous,
-          modules: modules,
-          isLoading: false,
-        }));
-      } catch (e) {
-        // can't decode modules
-        setState((previous) => ({ ...previous, isLoading: false }));
-      }
-    })();
+    try {
+      setState((previous) => ({ ...previous, modules: data, isLoading: false }));
+    } catch (error) {
+      console.error("Failed to load modules", error);
+    }
   }, []);
-
-  useEffect(() => {
-    LocalStorage.setItem("modules", JSON.stringify(state.modules));
-  }, [state.modules]);
 
   const { data: modules, visitItem } = useFrecencySorting(state.modules);
 
@@ -121,18 +90,22 @@ export default function Command() {
                   shortcut={{ modifiers: ["cmd"], key: "n" }}
                   icon={Icon.Text}
                 />
+                <Action.CopyToClipboard
+                  title="Copy Module Code to Clipboard"
+                  content={module.module_code}
+                  shortcut={{ modifiers: ["cmd"], key: "c" }}
+                  icon={Icon.Number42}
+                />
                 <Action.Open
                   title="Open in Finder"
-                  target={join(
-                    homedir(),
-                    "Documents",
-                    "University",
-                    "CS",
-                    `Year ${module.year}`,
-                    `Semester ${module.semester}`,
-                    `${module.title} - ${module.module_code}`
-                  )}
+                  target={getModuleFolderPath(module)}
                   shortcut={{ modifiers: ["cmd"], key: "o" }}
+                />
+                <Action
+                  title="Create Module Folder"
+                  icon={Icon.Folder}
+                  onAction={() => createModuleFolder(module)}
+                  shortcut={{ modifiers: ["cmd", "shift"], key: "o" }}
                 />
               </ActionPanel.Section>
             </ActionPanel>

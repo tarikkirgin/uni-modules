@@ -9,7 +9,6 @@ setTimeout(() => {
   for (let i = 0; i < elements.length; i++) {
     const rawTitle = elements[i].getAttribute("title");
 
-    //   const rawTitle = "23/24(1) COMP1421 Fundamental Mathematical Concepts (32437)";
     const regexPattern = /^(\d+\/\d+)\((\d+)\)\s+([A-Z]{4}\d{4})\s*(.+)\s+\(\d{5}\)$/;
 
     const matchResult = rawTitle.match(regexPattern);
